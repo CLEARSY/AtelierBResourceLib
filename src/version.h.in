@@ -1,0 +1,14 @@
+/*
+  This file is generated automatically with CMake.
+  Contents is filled using git commands to obtain
+  git tag and git sha.
+*/
+#ifndef ATELIERB_RESOURCE_LIB_VERSION_H
+#define ATELIERB_RESOURCE_LIB_VERSION_H
+
+#define ATELIERB_RESOURCE_LIB_VERSION "@GIT_DESCRIBE_TAG@"
+#define ATELIERB_RESOURCE_LIB_SOURCE_CODE_SHA "@GIT_REPO_SHA@"
+
+#define RESOURCES_COPYRIGHT "(c) 2024 CLEARSY"
+
+#endif /* ATELIERB_RESOURCE_LIB_VERSION_H */

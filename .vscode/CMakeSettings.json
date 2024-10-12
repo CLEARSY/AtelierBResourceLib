@@ -1,0 +1,10 @@
+{
+    "configurations": [
+    {
+      "name": "x64-debug",
+      "generator": "Ninja",
+     "enableMicrosoftCodeAnalysis": true,
+     "enableClangTidyCodeAnalysis": true
+    }
+    ]
+}

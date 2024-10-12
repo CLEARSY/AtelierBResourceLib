@@ -1,0 +1,58 @@
+# This file is part of AtelierBResourceLib
+# Copyright (C) 2024 CLEARSY (contact@clearsy.com)
+
+# AtelierBResourceLib is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; GNU General Public License version 3
+# of the License
+
+# AtelierBResourceLib is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with AtelierBResourceLib; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+#!/bin/sh
+# Lance un test du banc de tests NGOP
+#
+HOMETEST=$1
+TOOLSDIR=$2
+ID=$3
+
+cd $HOMETEST
+
+TESTDIR=$HOMETEST/$ID
+REFERENCEDIR=$TESTDIR/output/reference
+RESULTDIR=$TESTDIR/output/result
+if [ -d $RESULTDIR ]; then
+    rm -fr $RESULTDIR
+fi
+mkdir -p $RESULTDIR
+
+$TOOLSDIR/printResourceFile $HOMETEST/$ID/AtelierB > $RESULTDIR/stdout 2> $RESULTDIR/stderr
+echo $? > $RESULTDIR/exitcode
+
+diff $REFERENCEDIR/stdout $RESULTDIR/stdout
+if [ $? -ne 0 ]
+then
+    echo "!! stdout is not identical to reference for $ID"
+else
+
+diff $REFERENCEDIR/stderr $RESULTDIR/stderr
+if [ $? -ne 0 ]
+then
+    echo "!! stderr is not identical to reference for $ID"
+else
+
+diff $REFERENCEDIR/exitcode $RESULTDIR/exitcode
+if [ $? -ne 0 ]
+then
+    echo "!! exitcode is not identical to reference for $ID"
+else
+    echo "OK"
+fi
+fi
+fi
