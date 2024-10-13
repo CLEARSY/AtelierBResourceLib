@@ -35,19 +35,20 @@ mkdir -p $RESULTDIR
 $TOOLSDIR/printResourceFile $HOMETEST/$ID/AtelierB > $RESULTDIR/stdout 2> $RESULTDIR/stderr
 echo $? > $RESULTDIR/exitcode
 
-diff $REFERENCEDIR/stdout $RESULTDIR/stdout
+DIFF="diff --strip-trailing-cr"
+$DIFF $REFERENCEDIR/stdout $RESULTDIR/stdout
 if [ $? -ne 0 ]
 then
     echo "!! stdout is not identical to reference for $ID"
 else
 
-diff $REFERENCEDIR/stderr $RESULTDIR/stderr
+$DIFF $REFERENCEDIR/stderr $RESULTDIR/stderr
 if [ $? -ne 0 ]
 then
     echo "!! stderr is not identical to reference for $ID"
 else
 
-diff $REFERENCEDIR/exitcode $RESULTDIR/exitcode
+$DIFF $REFERENCEDIR/exitcode $RESULTDIR/exitcode
 if [ $? -ne 0 ]
 then
     echo "!! exitcode is not identical to reference for $ID"

@@ -1,5 +1,7 @@
 # AtelierBResourceLib
 
+[![CMake on multiple platforms](https://github.com/CLEARSY/AtelierBResourceLib/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/CLEARSY/AtelierBResourceLib/actions/workflows/cmake-multi-platform.yml)
+
 The ultimate goal of this project is to provide a modern C++ API to access Atelier B resource files.
 
 Currently the feature set is limited to load a resource file and obtain resource values
