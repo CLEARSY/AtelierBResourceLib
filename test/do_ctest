@@ -22,6 +22,13 @@ HOMETEST=$1
 TOOLSDIR=$2
 ID=$3
 
+# Create dummy environment variables for the tests
+export DUMMY1=dummy1
+export DUMMY2=dummy2
+export MYLONGER=myLongerVariable
+export MYSHORTER=myVar
+export MYEMPTY=
+
 cd $HOMETEST
 
 TESTDIR=$HOMETEST/$ID

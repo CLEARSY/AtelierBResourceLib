@@ -18,6 +18,7 @@
 ******************************************************************************/
 #include <fstream>
 #include <regex>
+#include <cstring>
 
 #include "AtelierBResourceLib.h"
 
@@ -60,6 +61,8 @@ void AtelierB::ResourceFileReader::loadFile(const fspath& path) {
     }
 
     string line;
+    int lineNumber = 1;
+    const std::regex variableRegex(R"((?:^|[^\$]+)(\$(?:[A-Za-z0-9._-]+|\{[A-Za-z0-9._-]+\})))");
     std::regex resourceRegex(R"(ATB\*(\w+)\*(\w+):\s*(.*))");  // Regex pattern
 
     while (std::getline(file, line)) {
@@ -73,6 +76,41 @@ void AtelierB::ResourceFileReader::loadFile(const fspath& path) {
         line.erase(0, line.find_first_not_of(" \t"));
         line.erase(line.find_last_not_of(" \t") + 1);
 
+        // Replace variables
+        {
+            std::smatch matches;
+            std::string::const_iterator searchStart(line.cbegin());
+            while (std::regex_search(searchStart, line.cend(), matches, variableRegex)) {
+                const std::string envvar = matches[1];
+                std::string varname = envvar;
+                varname.erase(std::remove_if(varname.begin(), varname.end(),
+                                             [](const char &c){ return c == '$' || c == '{' || c == '}'; }),
+                              varname.end());
+                char *replacement = std::getenv(varname.c_str());
+                if (replacement == NULL) {
+                    fprintf(stderr,
+                            "%s:%d: Resource file error: unknown environment variable %s\n",
+                            path,
+                            lineNumber,
+                            envvar.c_str()) ;
+                    searchStart = matches[1].first + envvar.length();
+                } else {
+                    const size_t offset = matches[1].first - line.cbegin();
+                    line.replace(matches[1].first, matches[1].second, replacement);
+                    searchStart = line.cbegin()+ offset + strlen(replacement);
+                }
+            }
+
+            const std::string target = "$$";
+            const std::string replacement = "$";
+            size_t pos = 0;
+
+            while ((pos = line.find(target, pos)) != std::string::npos) {
+                line.replace(pos, target.length(), replacement);
+                pos += replacement.length();
+            }
+        }
+
         // Match resource declaration
         std::smatch matches;
         if (std::regex_match(line, matches, resourceRegex)) {
@@ -83,6 +121,8 @@ void AtelierB::ResourceFileReader::loadFile(const fspath& path) {
 
             m_resources.push_back(resource);
         }
+
+        lineNumber++;
     }
     file.close();
 }
