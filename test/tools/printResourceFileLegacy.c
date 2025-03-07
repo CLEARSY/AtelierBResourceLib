@@ -21,10 +21,9 @@
 #include "legacy_api.h"
 
 int main(int argc, char *argv[]) {
-    const char *path = argv[1];
-    init_resource_manager();
-    load_resources(path, NULL, NULL);
-    fprintf(stdout, "ATB*ATB*Encoding:%s\n",
-            lookup_resource("ATB", "Encoding"));
-    return 0;
+  const char *path = argv[1];
+  init_resource_manager();
+  load_resources(path, NULL, NULL);
+  fprintf(stdout, "ATB*ATB*Encoding:%s\n", lookup_resource("ATB", "Encoding"));
+  return 0;
 }

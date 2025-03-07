@@ -21,9 +21,9 @@
 
 #include "AtelierBResourceLib.h"
 int main(int argc, char *argv[]) {
-    std::filesystem::path path{argv[1]};
-    AtelierB::ResourceFileReader reader;
-    reader.loadFile(path);
-    std::cout << reader;
-    return 0;
+  std::filesystem::path path{argv[1]};
+  AtelierB::ResourceFileReader reader;
+  reader.loadFile(path);
+  std::cout << reader;
+  return 0;
 }

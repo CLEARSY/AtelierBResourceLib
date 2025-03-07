@@ -23,19 +23,19 @@
 static AtelierB::ResourceFileReader *resource_manager{nullptr};
 
 void init_resource_manager(void) {
-    if (resource_manager != nullptr) {
-        delete resource_manager;
-    }
-    resource_manager = new AtelierB::ResourceFileReader();
+  if (resource_manager != nullptr) {
+    delete resource_manager;
+  }
+  resource_manager = new AtelierB::ResourceFileReader();
 }
 
 void load_resources(const char *system_file_name_acp, const char *,
                     const char *) {
-    if (resource_manager == nullptr) return;
-    resource_manager->loadFile(system_file_name_acp);
+  if (resource_manager == nullptr) return;
+  resource_manager->loadFile(system_file_name_acp);
 }
 
 const char *lookup_resource(const char *tool, const char *name) {
-    if (resource_manager == nullptr) return nullptr;
-    return resource_manager->lookupResourceCStr(tool, name);
+  if (resource_manager == nullptr) return nullptr;
+  return resource_manager->lookupResourceCStr(tool, name);
 }

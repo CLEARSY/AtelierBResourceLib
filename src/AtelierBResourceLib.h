@@ -41,39 +41,39 @@ namespace AtelierB {
 
 /**@brief Representation of a resource with its value */
 struct Resource {
-    std::string m_tool; /*!< The identifier for the component of the resource */
-    std::string m_name; /*!< The name for the resource */
-    std::string m_value; /*!< The value for the resource */
+  std::string m_tool;  /*!< The identifier for the component of the resource */
+  std::string m_name;  /*!< The name for the resource */
+  std::string m_value; /*!< The value for the resource */
 
-    friend std::ostream &operator<<(std::ostream &, const Resource &);
+  friend std::ostream &operator<<(std::ostream &, const Resource &);
 };
 
 /**@brief A class to access resource files in read-only mode */
 class ResourceFileReader {
-   public:
-    ResourceFileReader();
-    ~ResourceFileReader();
-    /**@brief Reads all the resources from the given file and stores them
-     * internally.
-     *
-     * If there is an error, the internal error status is set.
-     */
-    void loadFile(const std::filesystem::path &file);
-    /**@brief Return the internal error status. */
-    bool error() const;
-    /**@brief Returns the value of the resource identified by tool and name. */
-    const std::string &lookupResource(const std::string &tool,
-                                      const std::string &name);
-    /**@brief Returns the value of the resource identified by tool and name as a
-     * C string. */
-    const char *lookupResourceCStr(const std::string &tool,
-                                   const std::string &resource);
+ public:
+  ResourceFileReader();
+  ~ResourceFileReader();
+  /**@brief Reads all the resources from the given file and stores them
+   * internally.
+   *
+   * If there is an error, the internal error status is set.
+   */
+  void loadFile(const std::filesystem::path &file);
+  /**@brief Return the internal error status. */
+  bool error() const;
+  /**@brief Returns the value of the resource identified by tool and name. */
+  const std::string &lookupResource(const std::string &tool,
+                                    const std::string &name);
+  /**@brief Returns the value of the resource identified by tool and name as a
+   * C string. */
+  const char *lookupResourceCStr(const std::string &tool,
+                                 const std::string &resource);
 
-   private:
-    std::vector<Resource> m_resources;
-    bool m_error;
+ private:
+  std::vector<Resource> m_resources;
+  bool m_error;
 
-    friend std::ostream &operator<<(std::ostream &, const ResourceFileReader &);
+  friend std::ostream &operator<<(std::ostream &, const ResourceFileReader &);
 };
 
 /**@brief library version string */
