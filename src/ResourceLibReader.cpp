@@ -1,6 +1,6 @@
 /******************************* CLEARSY **************************************
     This file is part of AtelierBResourceLib
-    Copyright (C) 2024 CLEARSY (contact@clearsy.com)
+    Copyright (C) 2024-2025 CLEARSY (contact@clearsy.com)
 
     AtelierBResourceLib is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include <fstream>
 #include <regex>
 #include <cstring>
+#include <iostream>
 
 #include "AtelierBResourceLib.h"
 
@@ -88,11 +89,10 @@ void AtelierB::ResourceFileReader::loadFile(const fspath& path) {
                               varname.end());
                 char *replacement = std::getenv(varname.c_str());
                 if (replacement == NULL) {
-                    fprintf(stderr,
-                            "%s:%d: Resource file error: unknown environment variable %s\n",
-                            path,
-                            lineNumber,
-                            envvar.c_str()) ;
+		  std::cerr << path.string() << ":"
+			    << lineNumber << ": "
+			    << "Resource file error: unknown environment variable "
+			    << envvar << std::endl;
                     searchStart = matches[1].first + envvar.length();
                 } else {
                     const size_t offset = matches[1].first - line.cbegin();

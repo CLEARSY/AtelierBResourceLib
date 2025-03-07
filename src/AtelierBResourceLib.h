@@ -1,6 +1,6 @@
 /******************************************************************************
     This file is part of AtelierBResourceLib
-    Copyright (C) 2024 CLEARSY (contact@clearsy.com)
+    Copyright (C) 2024-2025 CLEARSY (contact@clearsy.com)
 
     AtelierBResourceLib is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -85,6 +85,10 @@ extern const std::string ResourceLibCopyright;
 /**@brief library license information */
 extern const std::string ResourceLibLicense;
 
+/**@brief output the resource in a human-friendly format*/
+extern std::ostream &operator<<(std::ostream &, const Resource &);
+/**@brief output all the read resources in a human-friendly format*/
+extern std::ostream &operator<<(std::ostream &, const ResourceFileReader &);
 };  // namespace AtelierB
 
 #endif  // ATELIERB_RESOURCE_FILE_READER_H
